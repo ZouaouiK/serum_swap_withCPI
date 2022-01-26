@@ -8,7 +8,8 @@ import {
   checkProgram,
   sayHello,
   reportGreetings,
-  swapWithSeurm,
+  swapBtoAWithSeurm,
+  swapAtoBWithSeurm,
 } from './hello_world';
 
 async function main() {
@@ -25,8 +26,10 @@ async function main() {
 
   // Say hello to an account
    // await sayHello();
-  // sawp with serum 
- await swapWithSeurm();
+  // sawp with serum  B to A
+// await swapBtoAWithSeurm();
+   // sawp with serum  A to B
+await swapAtoBWithSeurm();
 
   // Find out how many times that account has been greeted
   await reportGreetings();

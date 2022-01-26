@@ -16,12 +16,12 @@ use anchor_spl::token;
 use solana_program::declare_id;
 use std::num::NonZeroU64;
 
-declare_id!("7DcraPU81PGGLrDJ59T7WY4H453jpj5TEgzeLSBWwSmo");
+declare_id!("Dg1MkkyWNVMhpR2angpSEBeE8ZgLtUzjxQbQV4fgXiYG");
 
 // Associated token account for Pubkey::default.
 mod empty {
     use super::*;
-    declare_id!("7DcraPU81PGGLrDJ59T7WY4H453jpj5TEgzeLSBWwSmo");
+    declare_id!("Dg1MkkyWNVMhpR2angpSEBeE8ZgLtUzjxQbQV4fgXiYG");
 }
 
 #[program]
@@ -68,41 +68,45 @@ pub mod serum_swap {
         amount: u64,
         min_exchange_rate: ExchangeRate,
     ) -> Result<()> {
-        msg!("swap Rust program ");
         let mut min_exchange_rate = min_exchange_rate;
-       
+        msg!("swap 1");
         // Not used for direct swaps.
         min_exchange_rate.quote_decimals = 0;
-        msg!("11 ");
+        msg!("swap 2");
         // Optional referral account (earns a referral fee).
         let referral = ctx.remaining_accounts.iter().next().map(Clone::clone);
-        msg!("22 ");
+        msg!("swap 3");
         // Side determines swap direction.
         let (from_token, to_token) = match side {
             Side::Bid => (&ctx.accounts.pc_wallet, &ctx.accounts.market.coin_wallet),
             Side::Ask => (&ctx.accounts.market.coin_wallet, &ctx.accounts.pc_wallet),
         };
-        msg!("33 ");
+        msg!("swap 4 {:?}",from_token);
         // Token balances before the trade.
         let from_amount_before = token::accessor::amount(from_token)?;
         let to_amount_before = token::accessor::amount(to_token)?;
-        msg!("44 ");
+        msg!("from_amount_before  {:?} to_amount_before {:?} ",from_amount_before,to_amount_before);
+        msg!("swap 5");
         // Execute trade.
         let orderbook: OrderbookClient<'info> = (&*ctx.accounts).into();
+        msg!("swap 64");
         match side {
             Side::Bid => orderbook.buy(amount, None)?,
             Side::Ask => orderbook.sell(amount, None)?,
         };
+        msg!("swap 6");
         orderbook.settle(referral)?;
-        msg!("55 ");
+        msg!("swap 7");
         // Token balances after the trade.
         let from_amount_after = token::accessor::amount(from_token)?;
         let to_amount_after = token::accessor::amount(to_token)?;
-
+        msg!("from_amount_after  {:?} to_amount_after {:?} ",from_amount_after,to_amount_after);
+        msg!("swap 8");
         //  Calculate the delta, i.e. the amount swapped.
         let from_amount = from_amount_before.checked_sub(from_amount_after).unwrap();
+        msg!("swap 9 from_amount {}",from_amount);
         let to_amount = to_amount_after.checked_sub(to_amount_before).unwrap();
-        msg!("66 ");
+        msg!("swap 19 to_amount {}",to_amount);
         // Safety checks.
         apply_risk_checks(DidSwap {
             authority: *ctx.accounts.authority.key,
@@ -119,7 +123,7 @@ pub mod serum_swap {
                 Side::Ask => token::accessor::mint(to_token)?,
             },
         })?;
-        msg!("77 ");
+        msg!("swap 20");
         Ok(())
     }
 
@@ -200,7 +204,7 @@ pub mod serum_swap {
             given_amount: amount,
             min_exchange_rate,
             from_amount,
-            to_amount,
+            to_amount:1,
             quote_amount: sell_proceeds,
             spill_amount,
             from_mint: token::accessor::mint(&ctx.accounts.from.coin_wallet)?,
@@ -217,11 +221,11 @@ pub mod serum_swap {
 fn apply_risk_checks(event: DidSwap) -> Result<()> {
     // Emit the event for client consumption.
     emit!(event);
-
+    msg!("apply_risk_checks event.to_amount {:?}",event.to_amount);
     if event.to_amount == 0 {
         return Err(ErrorCode::ZeroSwap.into());
     }
-
+    msg!("apply_risk_checks 1");
     // Use the exchange rate to calculate the client's expectation.
     //
     // The exchange rate given must always have decimals equal to the
@@ -231,6 +235,7 @@ fn apply_risk_checks(event: DidSwap) -> Result<()> {
     // `decimals(from_mint) + decimals(to_mint) + decimals(quote_mint)`.
     //
     // We avoid truncating by adding `decimals(quote_mint)`.
+    msg!("apply_risk_checks 2");
     let min_expected_amount = u128::from(
         // decimals(from).
         event.from_amount,
@@ -247,10 +252,11 @@ fn apply_risk_checks(event: DidSwap) -> Result<()> {
             .unwrap(),
     )
     .unwrap();
-
+    msg!("apply_risk_checks 3");
     // If there is spill (i.e. quote tokens *not* fully consumed for
     // the buy side of a transitive swap), then credit those tokens marked
     // at the executed exchange rate to create an "effective" to_amount.
+    msg!("apply_risk_checks 4");
     let effective_to_amount = {
         // Translates the leftover spill amount into "to" units via
         //
@@ -291,7 +297,7 @@ fn apply_risk_checks(event: DidSwap) -> Result<()> {
             )
             .unwrap(),
         };
-
+        msg!("apply_risk_checks 5");
         // Translate the `to_amount` into a common number of decimals.
         let to_amount = u128::from(
             // decimals(to).
@@ -324,7 +330,7 @@ fn apply_risk_checks(event: DidSwap) -> Result<()> {
         );
         return Err(ErrorCode::SlippageExceeded.into());
     }
-
+    msg!("apply_risk_checks 5");
     Ok(())
 }
 
@@ -384,7 +390,7 @@ pub struct Swap<'info> {
     pub market: MarketAccounts<'info>,
     #[account(signer)]
     pub authority: AccountInfo<'info>,
-    #[account(mut)]
+    #[account(mut, constraint = pc_wallet.key != &empty::ID)]
     pub pc_wallet: AccountInfo<'info>,
     // Programs.
     pub dex_program: AccountInfo<'info>,

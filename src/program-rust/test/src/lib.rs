@@ -24,7 +24,7 @@ pub struct GreetingAccount {
 // Associated token account for Pubkey::default.
 mod empty {
     use super::*;
-    declare_id!("HJt8Tjdsc9ms9i4WCZEzhzr4oyf3ANcdzXrNdLPFqm3M");
+    declare_id!("2N4Ydhne5E9RnKkivyMLZndFGn5CGLXR4qk6F1whawZb");
 }
 
 #[derive(Accounts)]
@@ -117,46 +117,12 @@ pub enum Side {
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
 
-// Program entrypoint's implementation
-pub fn process_instruction(
+// Program entrypoint's implementation swap B To A //withdraw
+/* pub fn process_instruction(
     program_id: &Pubkey, // Public key of the account the hello world program was loaded into
     accounts: &[AccountInfo], // The account to say hello to
     _instruction_data: &[u8], // Ignored, all helloworld instructions are hello
 ) -> ProgramResult {
-
-  /*   msg!("Hello World Rust program entrypoint");
-    // Iterating accounts is safer than indexing
-    let accounts_iter = &mut accounts.iter();
-        // Get the account to say hello to
-        msg!("1");
-        let owner = next_account_info(accounts_iter)?;
-        let token_program_id=next_account_info(accounts_iter)?;
-        let program_address= next_account_info(accounts_iter)?;
-        let create_account_program=next_account_info(accounts_iter)?;
-        let program_id_swap=next_account_info(accounts_iter)?;
-        let program_id_swap_info=program_id_swap.clone();
-        let nonce=_instruction_data[0];
-        msg!("2");
-        let cpi_accounts=serum_swap::cpi::accounts::StructAccount{
-            owner:owner.clone()
-        };
-        msg!("3");
-        let expected_allocated_key =Pubkey::create_program_address(&[&create_account_program.key.to_bytes()[..32], &[nonce]], program_id)?;
-        if *program_address.key != expected_allocated_key {
-        // allocated key does not match the derived address
-        return Err(ProgramError::InvalidArgument);
-        }
-        msg!("4");
-        let seeds=&[&create_account_program.key.to_bytes()[..32], &[nonce]];
-        let signer_seeds = &[&seeds[..]];
-        msg!("5");
-        let cpi_ctx = CpiContext::new_with_signer(program_id_swap_info, cpi_accounts,signer_seeds);
-        msg!("6");
-        serum_swap::cpi::hello(cpi_ctx);
-        msg!("7");
-        Ok(()) */
-
-
      msg!("Hello World Rust program entrypoint");
 
     // Iterating accounts is safer than indexing
@@ -183,8 +149,7 @@ pub fn process_instruction(
     let program_address= next_account_info(accounts_iter)?;
     let create_account_program=next_account_info(accounts_iter)?;
     let program_id_swap_info=swap_program_id.clone();
-    let amount:u64=_instruction_data[0].into();
-    let nonce=_instruction_data[1];
+    let nonce=_instruction_data[0];
     msg!("2");
     let expected_allocated_key =Pubkey::create_program_address(&[&create_account_program.key.to_bytes()[..32], &[nonce]], program_id)?;
         if *program_address.key != expected_allocated_key {
@@ -217,25 +182,102 @@ pub fn process_instruction(
     msg!("3");
    
     msg!("4");
-      let rate:u64 = 1;
-      let from_decimals:u8 = 2;
-      let quote_decimals:u8 = 2;
-      let strict:bool=false;
+    let rate:u64 = 1;
+    let from_decimals:u8 = 6;
+    let quote_decimals:u8 = 6;
+    let strict:bool=false;
+    let amount:u64=2000000;
       let min_exchange_rate=serum_swap::ExchangeRate{ rate, from_decimals, quote_decimals, strict };
 let side=serum_swap::Side::Bid;
     msg!("8");
    // let cpi_ctx = CpiContext::new(program_id_swap_info cpi_accounts);
    let cpi_ctx = CpiContext::new(program_id_swap_info, cpi_accounts);
     msg!("5");
-    
     serum_swap::cpi::swap(cpi_ctx,side,amount,min_exchange_rate);
     msg!("6");
+    Ok(()) 
+}  */
 
-    
+// Program entrypoint's implementation swap A To B // deposit 
+pub fn process_instruction(
+    program_id: &Pubkey, // Public key of the account the hello world program was loaded into
+    accounts: &[AccountInfo], // The account to say hello to
+    _instruction_data: &[u8], // Ignored, all helloworld instructions are hello
+) -> ProgramResult {
+     msg!("Hello World Rust program entrypoint");
 
+    // Iterating accounts is safer than indexing
+    let accounts_iter = &mut accounts.iter();
+    msg!("1");
+    // Get the account to say hello to
+    let market1 = next_account_info(accounts_iter)?;
+    let request_queue = next_account_info(accounts_iter)?;
+    let event_queue = next_account_info(accounts_iter)?;
+    let bids = next_account_info(accounts_iter)?;
+    let asks = next_account_info(accounts_iter)?;
+    let coin_vault = next_account_info(accounts_iter)?;
+    let pc_vault = next_account_info(accounts_iter)?;
+    let vault_signer = next_account_info(accounts_iter)?;
+    let open_orders = next_account_info(accounts_iter)?;
+    let order_payer_token_account = next_account_info(accounts_iter)?;
+    let coin_wallet = next_account_info(accounts_iter)?;
+    let pc_wallet = next_account_info(accounts_iter)?;
+    let authority = next_account_info(accounts_iter)?;
+    let dex_program = next_account_info(accounts_iter)?;
+    let token_program = next_account_info(accounts_iter)?;
+    let swap_program_id= next_account_info(accounts_iter)?;
+    let rent = next_account_info(accounts_iter)?;
+    let program_address= next_account_info(accounts_iter)?;
+    let create_account_program=next_account_info(accounts_iter)?;
+    let program_id_swap_info=swap_program_id.clone();
+    let nonce=_instruction_data[0];
+    msg!("2");
+    let expected_allocated_key =Pubkey::create_program_address(&[&create_account_program.key.to_bytes()[..32], &[nonce]], program_id)?;
+        if *program_address.key != expected_allocated_key {
+        // allocated key does not match the derived address
+        return Err(ProgramError::InvalidArgument);
+        }
+        msg!("4");
+        let seeds=&[&create_account_program.key.to_bytes()[..32], &[nonce]];
+        let signer_seeds = &[&seeds[..]];
+    let cpi_accounts=serum_swap::cpi::accounts::Swap{
+        market:serum_swap::cpi::accounts::MarketAccounts{
+            market:market1.clone(),
+            open_orders:open_orders.clone(),
+            request_queue:request_queue.clone(),
+            event_queue:event_queue.clone(),
+            bids:bids.clone(),
+            asks:asks.clone(),
+            order_payer_token_account:order_payer_token_account.clone(),
+            coin_vault:coin_vault.clone(),
+            pc_vault:pc_vault.clone(),
+            vault_signer:vault_signer.clone(),
+            coin_wallet:coin_wallet.clone()
+        },
+        authority:authority.clone(),
+        pc_wallet:pc_wallet.clone(),
+        dex_program:dex_program.clone(),
+        token_program:token_program.clone(),
+        rent:rent.clone()
+    };
+    msg!("3");
+   
+    msg!("4");
+    let rate:u64 = 8;
+    let from_decimals:u8 = 6;
+    let quote_decimals:u8 = 6;
+    let strict:bool=false;
+    let amount:u64=2000000;
+      let min_exchange_rate=serum_swap::ExchangeRate{ rate, from_decimals, quote_decimals, strict };
+let side=serum_swap::Side::Ask;
+    msg!("8");
+   // let cpi_ctx = CpiContext::new(program_id_swap_info cpi_accounts);
+   let cpi_ctx = CpiContext::new(program_id_swap_info, cpi_accounts);
+    msg!("5");
+    serum_swap::cpi::swap(cpi_ctx,side,amount,min_exchange_rate);
+    msg!("6");
     Ok(()) 
 }
-
 // Sanity tests
 #[cfg(test)]
 mod test {

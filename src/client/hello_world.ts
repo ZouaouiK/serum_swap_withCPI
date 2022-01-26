@@ -228,37 +228,37 @@ export async function sayHello(): Promise<void> {
   );
 }
 /**
- * swap with serum 
+ * swap with serum  B TO A
  */
- export async function swapWithSeurm():Promise<void>{
+ export async function swapBtoAWithSeurm():Promise<void>{
   let createAccountProgram = new Account([112, 152, 22, 24, 214, 173, 250, 98, 192, 214, 50, 104, 196, 104, 105, 184, 87, 99, 220, 223, 116, 66, 3, 19, 167, 5, 102, 11, 232, 199, 11, 166, 87, 188, 108, 80, 242, 45, 37, 163, 74, 88, 103, 23, 49, 219, 164, 70, 19, 227, 104, 61, 89, 136, 150, 158, 145, 111, 179, 89, 53, 73, 6, 20]);
   let [programAddress, nonce] = await PublicKey.findProgramAddress(
     [createAccountProgram.publicKey.toBuffer()],
     programId,
   );
-  let market=new PublicKey("3CykJJiyHfukKpA21sKwkXP6hXz7zLbCWVBZjNVGSfCy")//Writable: true
- let requestQueue=new PublicKey("AUSjBwS9U7NZoL6PTyELJhyRysBPrE2NqpsTqgUZxuFi")//true
- let eventQueue=new PublicKey("5B1LgbcXWimNBW1QicNkfQhq9KLifpWDrRH3Z8F8F4rJ")//true
- let bids=new PublicKey("GHbfKNTophWGjGeUz8nUsnkUaLaQRQgqGtoks37d75PY")//true
- let asks=new PublicKey("wUcxHXUULypUwqnvPhxh24yg9WdLLmFmwrfrmfSLb2K")//true
- let coinVault=new PublicKey("Hq7GZE2WRw32p3wBwTEu9JAmVR1vSLfQTSdFpT63S3kh")//true
- let pcVault=new PublicKey("HNEzsThJVeVGYgo6RQVLyWjXLusBv6GkpDbm9s8irEY4")//true
- let vaultSigner=new PublicKey("EA6nyphSNDWBFEUshPFWnG99jx6Tucp8S7zo57f9phwa")//false
- let openOrders=new PublicKey("GcH8RR6xpdNc29267DAgCsNwZdQg32RLRGKWMa6h2cVE")//true
- let orderPayerTokenAccount=new PublicKey("Gra55eW39bb4UB25yd8CdqiwagJ7LcvQagMEhf7PcECP")//true
- let coinWallet=new PublicKey("Bz5qNGZJLyAxdguHy5Ltpy6w9LQA4x8iokNwcvQ3DRWn")//true
- let pcWallet=new PublicKey("Gra55eW39bb4UB25yd8CdqiwagJ7LcvQagMEhf7PcECP")//true
+  let market=new PublicKey("EfUPyWAAWYjoFMM1yefwsYXigE6kWxaAeLsVmj1YumZ9")//Writable: true
+ let requestQueue=new PublicKey("Cg2TKByx9nMkAV53XNH956hXoLB7Wt8AD8LNcLw8Sk9j")//true
+ let eventQueue=new PublicKey("4zCmNTAYipqH1H3D3LEkNYgKuSxm1HXHaKh3Q73AUUDJ")//true
+ let bids=new PublicKey("ryicnKPhBAvoXW9ouQhfRWd2yw2kQLgsBcr6iAw2N4A")//true
+ let asks=new PublicKey("3h3n3HLe5Du2cofg9AA4PZkjteqeHqbXQtJgSTWVnRx6")//true
+ let coinVault=new PublicKey("DXXKpGJ8bE8d5yVPiZiXFS1XdVHCCy7JJYRvMVU6MxFD")//true
+ let pcVault=new PublicKey("5HQjsSHFkXMNdidCCbUXc414fi49CMMGTM41xHuXap7f")//true
+ let vaultSigner=new PublicKey("5eLiGqMzQbZ6YmAYX9EttR6azxuMS587eC9WYJnUuq15")//false
+ let openOrders=new PublicKey("FSuajWQ1MhsUJF7XAfXGkTkbVF1XJdfrGP578BRnuUM")//true
+ let orderPayerTokenAccount=new PublicKey("FkSdR4hAZMTnHCAp3dT9GhiTXL4knzgaKgN3cCT6AxHE")//true
+ let coinWallet=new PublicKey("42Y4pE4GHoWM8Je4knbPKrTf3bsyS6Z197eRXPxn2jey")//true
+ let pcWallet=new PublicKey("FkSdR4hAZMTnHCAp3dT9GhiTXL4knzgaKgN3cCT6AxHE")//true
  let dexProgram=new PublicKey("DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY")//false
  let tokenProgramId=new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")//false
-let swapProgramId=new PublicKey("7DcraPU81PGGLrDJ59T7WY4H453jpj5TEgzeLSBWwSmo");
-let authority=new Account([208,251,172,152,229,184,195,97,26,85,110,142,252,219,139,25,251,61,138,41,115,112,30,219,170,116,106,131,172,179,15,138,96,194,38,88,147,249,69,107,71,90,154,211,112,74,216,229,80,135,105,3,178,55,38,30,11,70,121,167,221,64,74,9])
+let swapProgramId=new PublicKey("Dg1MkkyWNVMhpR2angpSEBeE8ZgLtUzjxQbQV4fgXiYG");
+let authority=new Account([92,214,28,156,59,19,5,96,187,84,201,183,47,79,228,182,53,200,87,175,118,103,172,100,17,143,32,47,203,125,132,78,204,193,93,5,199,108,171,91,214,51,110,202,161,21,93,119,0,76,78,118,41,98,33,79,138,6,196,205,188,29,102,142])
  let rent=SYSVAR_RENT_PUBKEY;
 const Side = {
   Bid: { bid: {} },
   Ask: { ask: {} },
 };
 //let authority=new Account([148,198,132,12,200,247,88,166,64,128,133,187,69,127,77,12,43,5,248,120,13,15,199,71,152,168,161,234,28,119,249,96,228,125,19,4,240,25,224,35,243,24,231,28,124,44,172,139,55,53,224,154,199,32,139,68,101,128,20,10,80,89,165,170])
-const swapAmount = new BN((2 * 10 ** 2));
+//const swapAmount = new BN(2000000);
  const instruction = new TransactionInstruction({
   keys: [//17
     {pubkey: market, isSigner: false, isWritable: true},
@@ -282,7 +282,7 @@ const swapAmount = new BN((2 * 10 ** 2));
     {pubkey: createAccountProgram.publicKey, isSigner: false, isWritable: false},
   ],
   programId,
-  data: Buffer.from([swapAmount,nonce]), // All instructions are hellos
+  data: Buffer.from([nonce]), // All instructions are hellos
 });
  let tx=await sendAndConfirmTransaction(
     connection,
@@ -292,7 +292,71 @@ const swapAmount = new BN((2 * 10 ** 2));
   console.log("tx = ",tx);
 
   }
+/**
+ * swap with serum  A TO B
+ */
+ export async function swapAtoBWithSeurm():Promise<void>{
+  let createAccountProgram = new Account([112, 152, 22, 24, 214, 173, 250, 98, 192, 214, 50, 104, 196, 104, 105, 184, 87, 99, 220, 223, 116, 66, 3, 19, 167, 5, 102, 11, 232, 199, 11, 166, 87, 188, 108, 80, 242, 45, 37, 163, 74, 88, 103, 23, 49, 219, 164, 70, 19, 227, 104, 61, 89, 136, 150, 158, 145, 111, 179, 89, 53, 73, 6, 20]);
+  let [programAddress, nonce] = await PublicKey.findProgramAddress(
+    [createAccountProgram.publicKey.toBuffer()],
+    programId,
+  );
+  let market=new PublicKey("EfUPyWAAWYjoFMM1yefwsYXigE6kWxaAeLsVmj1YumZ9")//Writable: true
+  let requestQueue=new PublicKey("Cg2TKByx9nMkAV53XNH956hXoLB7Wt8AD8LNcLw8Sk9j")//true
+  let eventQueue=new PublicKey("4zCmNTAYipqH1H3D3LEkNYgKuSxm1HXHaKh3Q73AUUDJ")//true
+  let bids=new PublicKey("ryicnKPhBAvoXW9ouQhfRWd2yw2kQLgsBcr6iAw2N4A")//true
+  let asks=new PublicKey("3h3n3HLe5Du2cofg9AA4PZkjteqeHqbXQtJgSTWVnRx6")//true
+  let coinVault=new PublicKey("DXXKpGJ8bE8d5yVPiZiXFS1XdVHCCy7JJYRvMVU6MxFD")//true
+  let pcVault=new PublicKey("5HQjsSHFkXMNdidCCbUXc414fi49CMMGTM41xHuXap7f")//true
+  let vaultSigner=new PublicKey("5eLiGqMzQbZ6YmAYX9EttR6azxuMS587eC9WYJnUuq15")//false
+  let openOrders=new PublicKey("FSuajWQ1MhsUJF7XAfXGkTkbVF1XJdfrGP578BRnuUM")//true
+  let orderPayerTokenAccount=new PublicKey("42Y4pE4GHoWM8Je4knbPKrTf3bsyS6Z197eRXPxn2jey")//true
+  let coinWallet=new PublicKey("42Y4pE4GHoWM8Je4knbPKrTf3bsyS6Z197eRXPxn2jey")//true
+  let pcWallet=new PublicKey("FkSdR4hAZMTnHCAp3dT9GhiTXL4knzgaKgN3cCT6AxHE")//true
+  let dexProgram=new PublicKey("DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY")//false
+  let tokenProgramId=new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")//false
+ let swapProgramId=new PublicKey("Dg1MkkyWNVMhpR2angpSEBeE8ZgLtUzjxQbQV4fgXiYG");
+ let authority=new Account([92,214,28,156,59,19,5,96,187,84,201,183,47,79,228,182,53,200,87,175,118,103,172,100,17,143,32,47,203,125,132,78,204,193,93,5,199,108,171,91,214,51,110,202,161,21,93,119,0,76,78,118,41,98,33,79,138,6,196,205,188,29,102,142])
+ let rent=SYSVAR_RENT_PUBKEY;
+const Side = {
+  Bid: { bid: {} },
+  Ask: { ask: {} },
+};
+//let authority=new Account([148,198,132,12,200,247,88,166,64,128,133,187,69,127,77,12,43,5,248,120,13,15,199,71,152,168,161,234,28,119,249,96,228,125,19,4,240,25,224,35,243,24,231,28,124,44,172,139,55,53,224,154,199,32,139,68,101,128,20,10,80,89,165,170])
+const swapAmount = new BN((8100000));
+ const instruction = new TransactionInstruction({
+  keys: [//17
+    {pubkey: market, isSigner: false, isWritable: true},
+    {pubkey: requestQueue, isSigner: false, isWritable: true},
+    {pubkey: eventQueue, isSigner: false, isWritable: true},
+    {pubkey: bids, isSigner: false, isWritable: true},
+    {pubkey: asks, isSigner: false, isWritable: true},
+    {pubkey: coinVault, isSigner: false, isWritable: true},
+    {pubkey: pcVault, isSigner: false, isWritable: true},
+    {pubkey: vaultSigner, isSigner: false, isWritable: true},
+    {pubkey: openOrders, isSigner: false, isWritable: true},
+    {pubkey: orderPayerTokenAccount, isSigner: false, isWritable: false},
+    {pubkey: coinWallet, isSigner: false, isWritable: true},
+    {pubkey: pcWallet, isSigner: false, isWritable: true},
+    {pubkey: authority.publicKey, isSigner: true, isWritable: true},
+    {pubkey: dexProgram, isSigner: false, isWritable: false},
+    {pubkey: tokenProgramId, isSigner: false, isWritable: false},
+    {pubkey: swapProgramId, isSigner: false, isWritable: false},
+    {pubkey: rent, isSigner: false, isWritable: false},
+    {pubkey: programAddress, isSigner: false, isWritable: false},
+    {pubkey: createAccountProgram.publicKey, isSigner: false, isWritable: false},
+  ],
+  programId,
+  data: Buffer.from([nonce]), // All instructions are hellos
+});
+ let tx=await sendAndConfirmTransaction(
+    connection,
+    new Transaction().add(instruction),
+    [payer,authority],
+  );
+  console.log("tx = ",tx);
 
+  }
 /**
  * Report the number of times the greeted account has been said hello to
  */
